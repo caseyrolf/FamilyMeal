@@ -772,7 +772,8 @@ function RecipeCaptureModal({ onClose, onSave }) {
   const [error, setError] = useState(null);
   const [draft, setDraft] = useState(null);
   const [busy, setBusy] = useState(false);
-  const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
   const [ocrProgress, setOcrProgress] = useState(null);
 
   useEffect(() => {
@@ -784,10 +785,13 @@ function RecipeCaptureModal({ onClose, onSave }) {
     setImageFile(null);
     setImagePreview(null);
     setOcrProgress(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    if (cameraInputRef.current) {
+      cameraInputRef.current.value = "";
     }
-  }, [fileInputRef]);
+    if (galleryInputRef.current) {
+      galleryInputRef.current.value = "";
+    }
+  }, [cameraInputRef, galleryInputRef]);
 
   const changeMode = useCallback(
     (mode) => {
@@ -819,11 +823,17 @@ function RecipeCaptureModal({ onClose, onSave }) {
     [resetImageSelection]
   );
 
-  const triggerImagePicker = useCallback(() => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
+  const openCameraPicker = useCallback(() => {
+    if (cameraInputRef.current) {
+      cameraInputRef.current.click();
     }
-  }, []);
+  }, [cameraInputRef]);
+
+  const openGalleryPicker = useCallback(() => {
+    if (galleryInputRef.current) {
+      galleryInputRef.current.click();
+    }
+  }, [galleryInputRef]);
 
   const parseSource = async () => {
     const trimmedUrl = url.trim();
@@ -938,10 +948,17 @@ function RecipeCaptureModal({ onClose, onSave }) {
             <>
               <div className="photo-uploader">
                 <input
-                  ref={fileInputRef}
+                  ref={cameraInputRef}
                   type="file"
                   accept="image/*"
                   capture="environment"
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                />
+                <input
+                  ref={galleryInputRef}
+                  type="file"
+                  accept="image/*"
                   onChange={handleImageChange}
                   style={{ display: "none" }}
                 />
@@ -955,10 +972,17 @@ function RecipeCaptureModal({ onClose, onSave }) {
                     <div className="photo-actions">
                       <button
                         type="button"
-                        className="secondary-button"
-                        onClick={triggerImagePicker}
+                        className="primary-button"
+                        onClick={openCameraPicker}
                       >
-                        Retake / replace
+                        Take new photo
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={openGalleryPicker}
+                      >
+                        Choose from library
                       </button>
                       <button
                         type="button"
@@ -972,16 +996,24 @@ function RecipeCaptureModal({ onClose, onSave }) {
                 ) : (
                   <>
                     <p className="photo-placeholder-text">
-                      Snap a clear picture of the recipe card or upload one from
-                      your library.
+                      Snap a clear picture of the recipe or pick one from your photo library.
                     </p>
-                    <button
-                      type="button"
-                      className="primary-button"
-                      onClick={triggerImagePicker}
-                    >
-                      Open camera / upload photo
-                    </button>
+                    <div className="photo-actions">
+                      <button
+                        type="button"
+                        className="primary-button"
+                        onClick={openCameraPicker}
+                      >
+                        Take photo
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={openGalleryPicker}
+                      >
+                        Choose from library
+                      </button>
+                    </div>
                   </>
                 )}
                 <small className="photo-note">
