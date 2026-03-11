@@ -1,15 +1,15 @@
-# fly.toml app configuration file generated for familymeal-small-wildflower-1014 on 2026-03-11T14:41:03-05:00
+# fly.toml app configuration file generated for familymeal-vwm7xg on 2026-03-11T19:46:38Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'familymeal-small-wildflower-1014'
-primary_region = 'dfw'
+app = 'familymeal-vwm7xg'
+primary_region = 'ord'
 
 [build]
 
 [http_service]
-  internal_port = 3000
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
@@ -20,4 +20,4 @@ primary_region = 'dfw'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 1024
+  memory_mb = 256
