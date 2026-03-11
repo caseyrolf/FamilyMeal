@@ -1,5 +1,5 @@
 /* global React, ReactDOM, html2canvas */
-const { useState, useEffect, useMemo, useCallback } = React;
+const { useState, useEffect, useMemo, useCallback, useRef } = React;
 
 const api = {
   async createSession(password, { createIfMissing = false } = {}) {
@@ -98,6 +98,47 @@ async function handleJsonResponse(response) {
     throw new Error(message);
   }
   return data;
+}
+
+let tesseractLoader = null;
+
+function ensureTesseract() {
+  if (window.Tesseract) {
+    return Promise.resolve(window.Tesseract);
+  }
+  if (!tesseractLoader) {
+    tesseractLoader = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.Tesseract) {
+          resolve(window.Tesseract);
+        } else {
+          reject(new Error("Failed to initialize OCR engine."));
+        }
+      };
+      script.onerror = () => {
+        reject(new Error("Unable to load Tesseract.js. Check your connection and try again."));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return tesseractLoader;
+}
+
+async function recognizeImageFile(file, { onProgress } = {}) {
+  const Tesseract = await ensureTesseract();
+  const { data } = await Tesseract.recognize(file, "eng", {
+    logger: (message) => {
+      if (onProgress && typeof onProgress === "function") {
+        if (message.status === "recognizing text" && typeof message.progress === "number") {
+          onProgress(message.progress);
+        }
+      }
+    },
+  });
+  return data?.text || "";
 }
 
 function normalizeCategories(value) {
@@ -440,7 +481,7 @@ function App() {
             className="primary-button"
             onClick={() => setModalState({ type: "add" })}
           >
-            Add Recipe from URL
+            Add Recipe
           </button>
           <button className="secondary-button" onClick={logout}>
             Sign Out
@@ -676,7 +717,7 @@ function RecipeCard({
           onChange={onToggleSelect}
         />
       </header>
-      <small>{recipe.url}</small>
+      {recipe.url && <small>{recipe.url}</small>}
       <div className="recipe-tags">
         {tags.length === 0 ? (
           <span className="tag-pill">uncategorized</span>
@@ -726,9 +767,63 @@ function RecipeCaptureModal({ onClose, onSave }) {
   const [importMode, setImportMode] = useState("url");
   const [url, setUrl] = useState("");
   const [recipeText, setRecipeText] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState(null);
   const [draft, setDraft] = useState(null);
   const [busy, setBusy] = useState(false);
+  const fileInputRef = useRef(null);
+  const [ocrProgress, setOcrProgress] = useState(null);
+
+  useEffect(() => {
+    if (!imagePreview) return undefined;
+    return () => URL.revokeObjectURL(imagePreview);
+  }, [imagePreview]);
+
+  const resetImageSelection = useCallback(() => {
+    setImageFile(null);
+    setImagePreview(null);
+    setOcrProgress(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [fileInputRef]);
+
+  const changeMode = useCallback(
+    (mode) => {
+      setImportMode(mode);
+      setError(null);
+      if (mode !== "photo") {
+        resetImageSelection();
+      }
+    },
+    [resetImageSelection]
+  );
+
+  const handleImageChange = useCallback(
+    (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) {
+        resetImageSelection();
+        return;
+      }
+      if (!file.type.startsWith("image/")) {
+        setError("Choose an image file (JPEG, PNG, or HEIC).");
+        resetImageSelection();
+        return;
+      }
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+      setError(null);
+    },
+    [resetImageSelection]
+  );
+
+  const triggerImagePicker = useCallback(() => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  }, []);
 
   const parseSource = async () => {
     const trimmedUrl = url.trim();
@@ -741,12 +836,34 @@ function RecipeCaptureModal({ onClose, onSave }) {
       setError("Paste or type the recipe text to continue.");
       return;
     }
+    if (importMode === "photo" && !imageFile) {
+      setError("Snap or upload a recipe photo before scanning.");
+      return;
+    }
     try {
       setBusy(true);
       setError(null);
-      const payload =
-        importMode === "url" ? { url: trimmedUrl } : { text: trimmedText };
-      const parsed = await api.parseRecipe(payload);
+      if (importMode === "photo") {
+        setOcrProgress(0);
+      } else {
+        setOcrProgress(null);
+      }
+      let parsed;
+      if (importMode === "photo") {
+        const ocrText = await recognizeImageFile(imageFile, {
+          onProgress: (progress) => setOcrProgress(progress),
+        });
+        if (!ocrText || !ocrText.trim()) {
+          setError("We couldn't read any text from that photo. Try better lighting or crop closer.");
+          setOcrProgress(null);
+          return;
+        }
+        parsed = await api.parseRecipe({ text: ocrText });
+      } else {
+        const payload =
+          importMode === "url" ? { url: trimmedUrl } : { text: trimmedText };
+        parsed = await api.parseRecipe(payload);
+      }
       setDraft({
         name: parsed.name || "",
         url: parsed.url || (importMode === "url" ? trimmedUrl : ""),
@@ -761,6 +878,7 @@ function RecipeCaptureModal({ onClose, onSave }) {
     } catch (err) {
       setError(err.message);
     } finally {
+      setOcrProgress(null);
       setBusy(false);
     }
   };
@@ -774,22 +892,23 @@ function RecipeCaptureModal({ onClose, onSave }) {
             <button
               type="button"
               className={`mode-button ${importMode === "url" ? "active" : ""}`}
-              onClick={() => {
-                setImportMode("url");
-                setError(null);
-              }}
+              onClick={() => changeMode("url")}
             >
               From URL
             </button>
             <button
               type="button"
               className={`mode-button ${importMode === "text" ? "active" : ""}`}
-              onClick={() => {
-                setImportMode("text");
-                setError(null);
-              }}
+              onClick={() => changeMode("text")}
             >
               Paste Text
+            </button>
+            <button
+              type="button"
+              className={`mode-button ${importMode === "photo" ? "active" : ""}`}
+              onClick={() => changeMode("photo")}
+            >
+              Scan Photo
             </button>
           </div>
           {importMode === "url" ? (
@@ -802,7 +921,7 @@ function RecipeCaptureModal({ onClose, onSave }) {
                 onChange={(event) => setUrl(event.target.value)}
               />
             </>
-          ) : (
+          ) : importMode === "text" ? (
             <>
               <label>Recipe Text</label>
               <textarea
@@ -815,6 +934,61 @@ function RecipeCaptureModal({ onClose, onSave }) {
                 rows={10}
               />
             </>
+          ) : (
+            <>
+              <div className="photo-uploader">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                />
+                {imagePreview ? (
+                  <>
+                    <img
+                      src={imagePreview}
+                      alt="Recipe preview"
+                      className="photo-preview-image"
+                    />
+                    <div className="photo-actions">
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={triggerImagePicker}
+                      >
+                        Retake / replace
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={resetImageSelection}
+                      >
+                        Remove photo
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="photo-placeholder-text">
+                      Snap a clear picture of the recipe card or upload one from
+                      your library.
+                    </p>
+                    <button
+                      type="button"
+                      className="primary-button"
+                      onClick={triggerImagePicker}
+                    >
+                      Open camera / upload photo
+                    </button>
+                  </>
+                )}
+                <small className="photo-note">
+                  Photos stay on this device; only the recognised text is sent to your recipe list.
+                </small>
+              </div>
+            </>
           )}
           <div className="export-actions">
             <button
@@ -822,7 +996,7 @@ function RecipeCaptureModal({ onClose, onSave }) {
               onClick={parseSource}
               disabled={busy}
             >
-              Parse recipe
+              {importMode === "photo" ? "Scan photo" : "Parse recipe"}
             </button>
           </div>
         </div>
@@ -836,7 +1010,13 @@ function RecipeCaptureModal({ onClose, onSave }) {
         />
       )}
       {error && <div className="error-banner">{error}</div>}
-      {busy && <small>Parsing recipe…</small>}
+      {busy && (
+        <small>
+          {importMode === "photo" && typeof ocrProgress === "number"
+            ? `Scanning photo… ${Math.round(ocrProgress * 100)}%`
+            : "Parsing recipe…"}
+        </small>
+      )}
     </ModalShell>
   );
 }
@@ -926,10 +1106,6 @@ function RecipeForm({ draft, onChange, onSave, primaryLabel }) {
       setError("Give this recipe a name before saving.");
       return;
     }
-    if (!draft.url?.trim()) {
-      setError("Missing recipe URL. Paste the source link.");
-      return;
-    }
     setError(null);
     onSave();
   };
@@ -942,7 +1118,7 @@ function RecipeForm({ draft, onChange, onSave, primaryLabel }) {
         value={draft.name || ""}
         onChange={(event) => updateField("name", event.target.value)}
       />
-      <label>Source URL</label>
+      <label>Source URL (optional)</label>
       <input
         className="text-input"
         value={draft.url || ""}
@@ -1161,12 +1337,14 @@ function RecipeDetailModal({ recipe, onClose, onEditFull, onUpdateSections }) {
       <div className="recipe-detail">
         <div className="section-box">
           <h3>Overview</h3>
-          <p>
-            <strong>Source:</strong>{" "}
-            <a href={recipe.url} target="_blank" rel="noreferrer">
-              {recipe.url}
-            </a>
-          </p>
+          {recipe.url && (
+            <p>
+              <strong>Source:</strong>{" "}
+              <a href={recipe.url} target="_blank" rel="noreferrer">
+                {recipe.url}
+              </a>
+            </p>
+          )}
           {recipe.categories?.length > 0 && (
             <p>
               <strong>Categories:</strong> {recipe.categories.join(", ")}

@@ -8,6 +8,7 @@
     "server": "node server/index.js",
     "seed": "node scripts/seed.js"
   },
+  "dependencies": {},
   "keywords": [],
   "author": "",
   "license": "ISC"

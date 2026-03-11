@@ -5,8 +5,7 @@ Password-scoped React web app for saving family recipes, planning meals, and gen
 ## Features
 
 - Password gate at entry; each password maps to a separate recipe collection stored locally in `data/family_meals.json`.
-- Add recipes by pasting a URL. The server fetches the page, parses JSON-LD recipe data when available, and falls back to heuristic scraping.
-- Import recipes by pasting a URL or dropping in raw recipe text; the parser normalises ingredients, steps, and nutrition facts automatically when present.
+- Add recipes by pasting a URL, scanning a recipe photo, or pasting raw text. Photo capture runs OCR in the browser (nothing is uploaded) and the extracted text is normalised server-side when saved.
 - Edit recipe details, categorize them (chicken, soup, dessert, etc.), and search by name or ingredient. Recipes support quick inline updates of ingredients and cooking steps from the detail view.
 - Build meal plans by selecting multiple recipes and generate an aggregated shopping list with summed ingredient quantities.
 - Export shopping lists as JSON, CSV, plain text, PNG image (via `html2canvas` in the browser), or POST them to a custom API endpoint.
@@ -15,12 +14,16 @@ Password-scoped React web app for saving family recipes, planning meals, and gen
 ## Tech Stack
 
 - **Frontend:** React 18 (UMD build via CDN) rendered in the browser, no bundler required.
-- **Backend:** Node.js 20 HTTP server (no external dependencies) serving the React app, JSON API, recipe scraping, and shopping-list aggregation.
+- **Backend:** Node.js 20 HTTP server with zero runtime dependencies; handles JSON API, recipe scraping, and shopping-list aggregation while delegating OCR to the browser.
 - **Storage:** Local JSON file at `data/family_meals.json`, organized by SHA-256 hash of the family password.
 
 ## Getting Started
 
-1. Install dependencies (none beyond Node.js 18+). This project avoids npm packages to keep setup light.
+1. Ensure Node.js 18+ is installed, then install project dependencies:
+
+   ```bash
+   npm install
+   ```
 2. Optionally seed demo data:
 
    ```bash
@@ -41,6 +44,7 @@ Password-scoped React web app for saving family recipes, planning meals, and gen
 - Static assets live in `client/` and are served directly by the Node server.
 - Recipe parsing favours JSON-LD (`application/ld+json`) blocks; if none are present, it falls back to searching for ingredient and instruction elements.
 - Ingredient normalization attempts to parse quantity and units to support shopping-list aggregation. Unknown formats default to carrying the original text.
+- Photo scans stay on-device. The browser loads Tesseract.js from a CDN on demand; clearer shots with good lighting produce noticeably better OCR results.
 - Shopping-list exports:
   - **JSON / CSV / Text** downloads happen client-side via blob URLs.
   - **PNG** export uses `html2canvas` loaded from a CDN.
@@ -62,4 +66,5 @@ Password-scoped React web app for saving family recipes, planning meals, and gen
 
 - In this workspace sandbox, binding to TCP ports is blocked, so `npm start` fails with `EPERM`. Run the app on your local machine instead.
 - The scraper relies on remote sites serving accessible HTML; some sites may block requests or omit structured recipe data, leading to minimal parsing results.
+- OCR accuracy depends on lighting, alignment, and text clarity; severely skewed or handwritten recipes may need manual cleanup.
 - There is no sophisticated error logging or rate limiting; this system is intended for personal/home use only.

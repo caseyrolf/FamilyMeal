@@ -420,6 +420,106 @@
           ],
           "createdAt": "2026-03-11T18:35:24.089Z",
           "updatedAt": "2026-03-11T18:35:24.089Z"
+        },
+        {
+          "id": "845bdce4-03d7-4b4c-b7cb-53370f56c455",
+          "name": "Homemade Bean and Bacon Soup",
+          "url": "https://www.tasteandtellblog.com/homemade-bean-bacon-soup/#wprm-recipe-container-32834",
+          "categories": [
+            "soup"
+          ],
+          "ingredients": [
+            {
+              "id": "b684e833-5465-404e-a613-79b1035ede92",
+              "original": "« 8 0z. Jones Dairy Farm Cherry Hardwood Smoked Bacon diced",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "« 8 0z. Jones Dairy Farm Cherry Hardwood Smoked Bacon diced",
+              "notes": ""
+            },
+            {
+              "id": "39b7b35d-afa1-40d4-bc8c-c5869082262f",
+              "original": "« 1 cup diced yellow onions",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "« 1 cup diced yellow onions",
+              "notes": ""
+            },
+            {
+              "id": "13d1d538-9176-453c-8ca8-c55099c8149e",
+              "original": "« 1 cup diced carrots",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "« 1 cup diced carrots",
+              "notes": ""
+            },
+            {
+              "id": "f6b3b6af-7afa-4ee7-b27d-4ccd7d9d3f12",
+              "original": "« 1 cup diced celery",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "« 1 cup diced celery",
+              "notes": ""
+            },
+            {
+              "id": "2944c034-fb56-403d-b508-ef973e7f505d",
+              "original": "2 cloves garlic minced",
+              "quantity": 2,
+              "unit": "clove",
+              "ingredient": "garlic minced",
+              "notes": ""
+            },
+            {
+              "id": "7dd69e39-10f7-4d58-a114-590ec245ac00",
+              "original": "4 cups chicken broth",
+              "quantity": 4,
+              "unit": "cup",
+              "ingredient": "chicken broth",
+              "notes": ""
+            },
+            {
+              "id": "efba1e85-7b87-499d-aa1e-29e43a98ba15",
+              "original": "« 3 cans 15 oz each Great Northern beans, drained and rinsed",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "« 3 cans 15 oz each Great Northern beans, drained and rinsed",
+              "notes": ""
+            },
+            {
+              "id": "eeef29f9-3f2a-45a5-93fd-ecdfbdb8365a",
+              "original": "« salt and pepper",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "« salt and pepper",
+              "notes": ""
+            },
+            {
+              "id": "a652e4ec-22c4-45f7-a710-d2766ad62638",
+              "original": "¢ 1 can 8 oz tomato sauce",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "¢ 1 can 8 oz tomato sauce",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Cook the bacon in a soup pot or Dutch oven until crisp. Remove with a slotted spoon to a",
+            "paper towel lined plate. Discard all but about 2 tablespoons of the bacon grease.",
+            "To the hot bacon grease, add the onions, carrots and celery. Cook over medium heat until",
+            "they start to soften, about 5 minutes. Add the garlic and cook an additional minute. Stir in",
+            "the chicken broth and beans. Season to taste with salt and pepper. Bring to a bubble then",
+            "reduce the heat to low and let the soup simmer for 1 hour.",
+            "Remove half of the soup to a blender or food processor. Process until smooth. Return the",
+            "puree to the soup pot and stir into the remaining soup. Add the tomato sauce and 3/4 of",
+            "the reserved bacon and stir to combine. Taste and season to taste with salt and pepper.",
+            "Let the soup simmer until it is heated through, about 5 minutes. Serve topped with the",
+            "remaining bacon."
+          ],
+          "notes": "",
+          "source": null,
+          "nutrition": [],
+          "createdAt": "2026-03-11T21:46:56.074Z",
+          "updatedAt": "2026-03-11T21:46:56.074Z"
         }
       ],
       "metadata": {}
