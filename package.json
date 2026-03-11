@@ -1,0 +1,14 @@
+{
+  "name": "familymeal",
+  "version": "1.0.0",
+  "description": "Password-scoped family meal planning web app with recipe parsing and shopping list exports",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

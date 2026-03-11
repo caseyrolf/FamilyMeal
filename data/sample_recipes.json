@@ -1,0 +1,115 @@
+{
+  "users": {
+    "2a97516c354b68848cdbd8f54a226a0a55b21ed138e207ad6c5cbb9c00aa5aea": {
+      "createdAt": "2026-03-01T12:00:00.000Z",
+      "recipes": [
+        {
+          "id": "sample-1",
+          "name": "Weeknight Chicken Tacos",
+          "url": "https://example.com/recipes/weeknight-chicken-tacos",
+          "categories": ["chicken", "tacos", "weeknight"],
+          "ingredients": [
+            {
+              "id": "sample-1-i-1",
+              "original": "1 lb boneless chicken thighs, sliced",
+              "quantity": 1,
+              "unit": "lb",
+              "ingredient": "boneless chicken thighs",
+              "notes": "sliced"
+            },
+            {
+              "id": "sample-1-i-2",
+              "original": "2 tbsp taco seasoning",
+              "quantity": 2,
+              "unit": "tbsp",
+              "ingredient": "taco seasoning",
+              "notes": ""
+            },
+            {
+              "id": "sample-1-i-3",
+              "original": "8 corn tortillas",
+              "quantity": 8,
+              "unit": null,
+              "ingredient": "corn tortillas",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Season chicken with taco spice blend.",
+            "Sauté chicken in skillet until cooked through.",
+            "Warm tortillas and assemble tacos with preferred toppings."
+          ],
+          "nutrition": [
+            {
+              "id": "sample-1-n-1",
+              "label": "Calories",
+              "value": "420 kcal"
+            },
+            {
+              "id": "sample-1-n-2",
+              "label": "Protein",
+              "value": "28 g"
+            }
+          ],
+          "notes": "Serve with avocado and salsa.",
+          "source": "Family Demo",
+          "createdAt": "2026-03-01T12:00:00.000Z",
+          "updatedAt": "2026-03-01T12:00:00.000Z"
+        },
+        {
+          "id": "sample-2",
+          "name": "Roasted Vegetable Soup",
+          "url": "https://example.com/recipes/roasted-vegetable-soup",
+          "categories": ["soup", "vegetarian"],
+          "ingredients": [
+            {
+              "id": "sample-2-i-1",
+              "original": "3 cups mixed root vegetables, diced",
+              "quantity": 3,
+              "unit": "cup",
+              "ingredient": "mixed root vegetables",
+              "notes": "diced"
+            },
+            {
+              "id": "sample-2-i-2",
+              "original": "4 cups vegetable broth",
+              "quantity": 4,
+              "unit": "cup",
+              "ingredient": "vegetable broth",
+              "notes": ""
+            },
+            {
+              "id": "sample-2-i-3",
+              "original": "1 tsp smoked paprika",
+              "quantity": 1,
+              "unit": "tsp",
+              "ingredient": "smoked paprika",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Roast diced vegetables until caramelized.",
+            "Simmer roasted vegetables with broth and seasoning for 20 minutes.",
+            "Blend to desired consistency and serve warm."
+          ],
+          "nutrition": [
+            {
+              "id": "sample-2-n-1",
+              "label": "Calories",
+              "value": "310 kcal"
+            },
+            {
+              "id": "sample-2-n-2",
+              "label": "Fiber",
+              "value": "8 g"
+            }
+          ],
+          "notes": "Finish with a squeeze of lemon juice.",
+          "source": "Family Demo",
+          "createdAt": "2026-03-01T12:05:00.000Z",
+          "updatedAt": "2026-03-01T12:05:00.000Z"
+        }
+      ]
+    }
+  }
+}

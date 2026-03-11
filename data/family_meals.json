@@ -1,0 +1,428 @@
+{
+  "users": {
+    "2a97516c354b68848cdbd8f54a226a0a55b21ed138e207ad6c5cbb9c00aa5aea": {
+      "createdAt": "2026-03-01T12:00:00.000Z",
+      "recipes": [
+        {
+          "id": "sample-1",
+          "name": "Weeknight Chicken Tacos",
+          "url": "https://example.com/recipes/weeknight-chicken-tacos",
+          "categories": [
+            "chicken",
+            "tacos",
+            "weeknight"
+          ],
+          "ingredients": [
+            {
+              "id": "sample-1-i-1",
+              "original": "1 lb boneless chicken thighs, sliced",
+              "quantity": 1,
+              "unit": "lb",
+              "ingredient": "boneless chicken thighs",
+              "notes": "sliced"
+            },
+            {
+              "id": "sample-1-i-2",
+              "original": "2 tbsp taco seasoning",
+              "quantity": 2,
+              "unit": "tbsp",
+              "ingredient": "taco seasoning",
+              "notes": ""
+            },
+            {
+              "id": "sample-1-i-3",
+              "original": "8 corn tortillas",
+              "quantity": 8,
+              "unit": null,
+              "ingredient": "corn tortillas",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Season chicken with taco spice blend.",
+            "Sauté chicken in skillet until cooked through.",
+            "Warm tortillas and assemble tacos with preferred toppings."
+          ],
+          "notes": "Serve with avocado and salsa.",
+          "source": "Family Demo",
+          "createdAt": "2026-03-01T12:00:00.000Z",
+          "updatedAt": "2026-03-01T12:00:00.000Z"
+        },
+        {
+          "id": "sample-2",
+          "name": "Roasted Vegetable Soup",
+          "url": "https://example.com/recipes/roasted-vegetable-soup",
+          "categories": [
+            "soup",
+            "vegetarian"
+          ],
+          "ingredients": [
+            {
+              "id": "sample-2-i-1",
+              "original": "3 cups mixed root vegetables, diced",
+              "quantity": 3,
+              "unit": "cup",
+              "ingredient": "mixed root vegetables",
+              "notes": "diced"
+            },
+            {
+              "id": "sample-2-i-2",
+              "original": "4 cups vegetable broth",
+              "quantity": 4,
+              "unit": "cup",
+              "ingredient": "vegetable broth",
+              "notes": ""
+            },
+            {
+              "id": "sample-2-i-3",
+              "original": "1 tsp smoked paprika",
+              "quantity": 1,
+              "unit": "tsp",
+              "ingredient": "smoked paprika",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Roast diced vegetables until caramelized.",
+            "Simmer roasted vegetables with broth and seasoning for 20 minutes.",
+            "Blend to desired consistency and serve warm."
+          ],
+          "notes": "Finish with a squeeze of lemon juice.",
+          "source": "Family Demo",
+          "createdAt": "2026-03-01T12:05:00.000Z",
+          "updatedAt": "2026-03-01T12:05:00.000Z"
+        }
+      ]
+    },
+    "fd9067cddd1f1c66e1e47344c8af025b2ac62e9791f297ad459da1050f7b7e6f": {
+      "createdAt": "2026-03-11T17:45:30.940Z",
+      "recipes": [
+        {
+          "id": "f71519a2-2959-4209-b7a7-65e01281d331",
+          "name": "Lemon Garlic Butter Chicken Spiedini",
+          "url": "https://www.allrecipes.com/lemon-garlic-butter-chicken-spiedini-recipe-8727930",
+          "categories": [
+            "chicken"
+          ],
+          "ingredients": [
+            {
+              "id": "28994d60-e425-400a-af90-20901a88f7d0",
+              "original": "1/2 cup extra-virgin olive oil",
+              "quantity": 0.5,
+              "unit": "cup",
+              "ingredient": "extra-virgin olive oil",
+              "notes": ""
+            },
+            {
+              "id": "4b47a783-bb6e-442b-a1e0-57df4a7b3271",
+              "original": "1/4 cup white wine, such as Pinot Grigio",
+              "quantity": 0.25,
+              "unit": "cup",
+              "ingredient": "white wine, such as Pinot Grigio",
+              "notes": ""
+            },
+            {
+              "id": "abe27558-96c7-469d-86dc-e3ddbd2c437c",
+              "original": "3 tablespoons lemon juice, divided",
+              "quantity": 3,
+              "unit": "tbsp",
+              "ingredient": "lemon juice, divided",
+              "notes": ""
+            },
+            {
+              "id": "bd499fb2-ca8d-423c-94b4-238df7d275d2",
+              "original": "1 teaspoon lemon zest",
+              "quantity": 1,
+              "unit": "tsp",
+              "ingredient": "lemon zest",
+              "notes": ""
+            },
+            {
+              "id": "5ebffccb-f56d-4e87-896b-8843708ca2a8",
+              "original": "4 cloves garlic, finely minced, divided",
+              "quantity": 4,
+              "unit": "clove",
+              "ingredient": "garlic, finely minced, divided",
+              "notes": ""
+            },
+            {
+              "id": "c917e622-bc2c-4d9e-b8f5-42ac3cf1747c",
+              "original": "1/4 teaspoon crushed red pepper flakes",
+              "quantity": 0.25,
+              "unit": "tsp",
+              "ingredient": "crushed red pepper flakes",
+              "notes": ""
+            },
+            {
+              "id": "91bc80bc-089d-4dff-88b3-8a18e72b84e9",
+              "original": "1/4 teaspoon dried oregano",
+              "quantity": 0.25,
+              "unit": "tsp",
+              "ingredient": "dried oregano",
+              "notes": ""
+            },
+            {
+              "id": "162dffaf-36ca-4717-9d8a-e6789859612d",
+              "original": "2 teaspoons kosher salt, divided",
+              "quantity": 2,
+              "unit": "tsp",
+              "ingredient": "kosher salt, divided",
+              "notes": ""
+            },
+            {
+              "id": "6a07f063-2364-46aa-aadd-6b2ad3d28ab2",
+              "original": "1 teaspoon freshly ground black pepper, divided",
+              "quantity": 1,
+              "unit": "tsp",
+              "ingredient": "freshly ground black pepper, divided",
+              "notes": ""
+            },
+            {
+              "id": "50a294f7-4d71-4276-9b53-15560824325e",
+              "original": "2 pounds skinless boneless chicken thighs, cut into 1 1/2 inch pieces",
+              "quantity": 2,
+              "unit": "lb",
+              "ingredient": "skinless boneless chicken thighs, cut into 1 1/2 inch pieces",
+              "notes": ""
+            },
+            {
+              "id": "19a09134-bab4-41d2-859e-6e87c0b46c8d",
+              "original": "2/3 cup Italian breadcrumbs",
+              "quantity": 0.6666666666666666,
+              "unit": "cup",
+              "ingredient": "Italian breadcrumbs",
+              "notes": ""
+            },
+            {
+              "id": "82f48b37-5cba-4655-aac9-550d54fc9cff",
+              "original": "2/3 cup panko",
+              "quantity": 0.6666666666666666,
+              "unit": "cup",
+              "ingredient": "panko",
+              "notes": ""
+            },
+            {
+              "id": "4029bfc6-e179-432f-a025-c332a2eeb0c2",
+              "original": "1/2 cup grated Parmesan cheese",
+              "quantity": 0.5,
+              "unit": "cup",
+              "ingredient": "grated Parmesan cheese",
+              "notes": ""
+            },
+            {
+              "id": "924f444f-0e61-40de-b2f2-ee48abcb78c2",
+              "original": "1/2 teaspoon garlic powder",
+              "quantity": 0.5,
+              "unit": "tsp",
+              "ingredient": "garlic powder",
+              "notes": ""
+            },
+            {
+              "id": "52191f30-a2da-402b-a529-644f8819eaa1",
+              "original": "6 (6 to 8 inch) skewers",
+              "quantity": 6,
+              "unit": null,
+              "ingredient": "(6 to 8 inch) skewers",
+              "notes": ""
+            },
+            {
+              "id": "c7db2e0d-748f-458a-a021-de805fc5d480",
+              "original": "olive oil cooking spray",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "olive oil cooking spray",
+              "notes": ""
+            },
+            {
+              "id": "6a271409-b714-47b5-9b6d-42cacee1a2ae",
+              "original": "4 tablespoons butter",
+              "quantity": 4,
+              "unit": "tbsp",
+              "ingredient": "butter",
+              "notes": ""
+            },
+            {
+              "id": "31657f64-2eb9-4682-81f1-942e05d4d458",
+              "original": "2 teaspoons finely chopped fresh parsley",
+              "quantity": 2,
+              "unit": "tsp",
+              "ingredient": "finely chopped fresh parsley",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Whisk together olive oil, wine, 2 tablespoons lemon juice, lemon zest, 1/2 of the garlic, crushed red pepper, oregano, 1 teaspoon salt, and 1/2 teaspoon pepper in a bowl. Add chicken and toss to coat. Cover and refrigerate 30 minutes to 1 hour.",
+            "Stir together remaining salt and pepper with bread crumbs, panko, Parmesan cheese, and garlic powder in a shallow dish. Remove chicken from marinade and toss to coat in breadcrumb mixture, pressing to adhere as necessary. Thread chicken onto skewers and coat with olive oil cooking spray.",
+            "Preheat an air fryer to 390 degrees F (198 degrees C).  Air fry until chicken is no longer pink at the center and juices run clear, and is until lightly golden brown and crisp, about 12 minutes. An instant read thermometer, inserted near the center, should read 165 degrees F (74 degrees C).",
+            "Meanwhile, melt butter with remaining garlic in a microwave-safe dish on High in the microwave, about 10 seconds.  Stir in remaining lemon juice and parsley. Drizzle butter mixture over chicken just before serving.",
+            "From the Editor",
+            "Pork Tenderloin can be used instead of chicken thighs if you'd like to change it up."
+          ],
+          "notes": "",
+          "source": null,
+          "nutrition": [
+            {
+              "id": "98a7f2a2-24f4-41ee-894d-88085524736b",
+              "label": "",
+              "value": "Facts"
+            },
+            {
+              "id": "dffb04f8-d18a-4b9c-9b6e-b0b56e1aa0c8",
+              "label": "",
+              "value": "Calories"
+            },
+            {
+              "id": "dff9da94-9a1b-4b55-82bc-0cb26fa302ee",
+              "label": "",
+              "value": "637"
+            },
+            {
+              "id": "a6307dbc-14e1-40ea-bc57-29ef36e55e28",
+              "label": "Total",
+              "value": "Fat 41g  Saturated Fat 13g  Cholesterol 212mg  Sodium 1173mg  Total Carbohydrate 22g  Dietary Fiber 2g  Total Sugars 2g  Protein 43g  Vitamin C 3mg  Calcium 152mg  Iron 3mg  Potassium 532mg"
+            }
+          ],
+          "createdAt": "2026-03-11T18:26:40.422Z",
+          "updatedAt": "2026-03-11T18:26:40.422Z"
+        },
+        {
+          "id": "6a55ce7c-6ccb-4f29-a865-02c1a07da524",
+          "name": "Chicken Parmesan",
+          "url": "https://www.allrecipes.com/recipe/223042/chicken-parmesan",
+          "categories": [
+            "chicken"
+          ],
+          "ingredients": [
+            {
+              "id": "3a29b85f-a68d-453e-8c53-484d3bd5bc8c",
+              "original": "4 skinless, boneless chicken breast halves",
+              "quantity": 4,
+              "unit": null,
+              "ingredient": "skinless, boneless chicken breast halves",
+              "notes": ""
+            },
+            {
+              "id": "329d2c19-f2b4-47ce-b84a-71f869be6921",
+              "original": "salt and freshly ground black pepper to taste",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "salt and freshly ground black pepper to taste",
+              "notes": ""
+            },
+            {
+              "id": "a58b1dff-33b4-45e3-a38f-03cf8772b48f",
+              "original": "2 large eggs",
+              "quantity": 2,
+              "unit": null,
+              "ingredient": "large eggs",
+              "notes": ""
+            },
+            {
+              "id": "a6450bb6-f39b-4ad8-bb62-beb1fd79e8fc",
+              "original": "1 cup panko bread crumbs, or more as needed",
+              "quantity": 1,
+              "unit": "cup",
+              "ingredient": "panko bread crumbs, or more as needed",
+              "notes": ""
+            },
+            {
+              "id": "7421428f-90ec-43a4-a3a9-11dfe4ef7d42",
+              "original": "3/4 cup freshly grated Parmesan cheese, divided",
+              "quantity": 0.75,
+              "unit": "cup",
+              "ingredient": "freshly grated Parmesan cheese, divided",
+              "notes": ""
+            },
+            {
+              "id": "40326b36-0faa-4ad9-b7f9-edf76ea93b51",
+              "original": "2 tablespoons all-purpose flour, or more if needed",
+              "quantity": 2,
+              "unit": "tbsp",
+              "ingredient": "all-purpose flour, or more if needed",
+              "notes": ""
+            },
+            {
+              "id": "2b9f14fa-c057-4f12-9f23-74f2b6b10d3a",
+              "original": "1/2 cup olive oil for frying, or as needed",
+              "quantity": 0.5,
+              "unit": "cup",
+              "ingredient": "olive oil for frying, or as needed",
+              "notes": ""
+            },
+            {
+              "id": "a8f94edf-12bd-446e-9c10-6038603ce085",
+              "original": "1/2 cup prepared tomato sauce",
+              "quantity": 0.5,
+              "unit": "cup",
+              "ingredient": "prepared tomato sauce",
+              "notes": ""
+            },
+            {
+              "id": "1f01294a-f951-453a-b1ea-16fa2ddc3c26",
+              "original": "1/4 cup fresh mozzarella, cut into small cubes",
+              "quantity": 0.25,
+              "unit": "cup",
+              "ingredient": "fresh mozzarella, cut into small cubes",
+              "notes": ""
+            },
+            {
+              "id": "5940640c-341d-4db6-844d-e718d9329320",
+              "original": "1/4 cup chopped fresh basil",
+              "quantity": 0.25,
+              "unit": "cup",
+              "ingredient": "chopped fresh basil",
+              "notes": ""
+            },
+            {
+              "id": "dc1147f6-32ad-4554-b2c7-ae9c0cdab8b2",
+              "original": "1/2 cup freshly grated provolone cheese",
+              "quantity": 0.5,
+              "unit": "cup",
+              "ingredient": "freshly grated provolone cheese",
+              "notes": ""
+            },
+            {
+              "id": "76096fe1-5dd8-4bd0-aac1-0b8c21579077",
+              "original": "2 teaspoons olive oil",
+              "quantity": 2,
+              "unit": "tsp",
+              "ingredient": "olive oil",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Gather the ingredients. Preheat the oven to 450 degrees F (230 degrees C).",
+            "Place chicken breasts between two sheets of heavy plastic (resealable freezer bags work well) on a solid, level surface. Firmly pound chicken with the smooth side of a meat mallet to a thickness of 1/2-inch.",
+            "Season chicken thoroughly with salt and pepper. Using a sifter or strainer, sprinkle flour over chicken breasts, evenly coating both sides.",
+            "Beat eggs in a shallow bowl and set aside. Mix bread crumbs and 1/2 cup Parmesan cheese in a separate bowl, set aside. Dip a flour-coated chicken breast in beaten eggs. Transfer breast to the bread crumb mixture, pressing crumbs into both sides. Repeat for each breast. Let chicken rest for 10 to 15 minutes.",
+            "Heat 1/2 inch of olive oil in a large skillet over medium-high heat until it begins to shimmer. Cook chicken in batches, so you do not overcrowd the pan, until golden, about 2 minutes per side. The chicken will finish cooking in the oven.",
+            "Transfer chicken to a baking dish. Top each breast with 2 tablespoons tomato sauce. Layer each chicken breast with equal amounts of mozzarella cheese, fresh basil, and provolone cheese. Sprinkle remaining Parmesan over top and drizzle each with 1/2 teaspoon olive oil.",
+            "Bake in the preheated oven until cheese is browned and bubbly and chicken breasts are no longer pink in the center, 15 to 20 minutes. An instant-read thermometer inserted into the center should read at least 165 degrees F (74 degrees C). Let chicken rest briefly before serving."
+          ],
+          "notes": "Use high-quality prepared tomato sauce for a better result. You can substitute pesto or dried Italian herbs for basil, or omit it entirely.",
+          "source": null,
+          "nutrition": [
+            {
+              "id": "4837dd55-653f-4883-9705-52ca74e6e1e4",
+              "label": "",
+              "value": "Calories"
+            },
+            {
+              "id": "a484e0e2-4e75-4860-8319-6dba5f3d7939",
+              "label": "",
+              "value": "471"
+            },
+            {
+              "id": "c789cc17-6897-4907-8fe9-a763742916b6",
+              "label": "Total",
+              "value": "Fat 25g  Saturated Fat 9g  Cholesterol 187mg  Sodium 840mg  Total Carbohydrate 25g  Dietary Fiber 1g  Total Sugars 2g  Protein 42g  Vitamin C 3mg  Calcium 380mg  Iron 2mg  Potassium 389mg"
+            }
+          ],
+          "createdAt": "2026-03-11T18:35:24.089Z",
+          "updatedAt": "2026-03-11T18:35:24.089Z"
+        }
+      ],
+      "metadata": {}
+    }
+  }
+}
