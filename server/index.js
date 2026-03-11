@@ -4,9 +4,25 @@ const path = require("path");
 const crypto = require("crypto");
 const { URL } = require("url");
 
-const DATA_DIR = path.join(__dirname, "..", "data");
-const DATA_FILE = path.join(DATA_DIR, "family_meals.json");
-const EXPORT_DIR = path.join(DATA_DIR, "exports");
+function resolveConfiguredPath(value, fallback) {
+  if (!value) return fallback;
+  return path.isAbsolute(value)
+    ? value
+    : path.resolve(process.cwd(), value);
+}
+
+const DATA_DIR = resolveConfiguredPath(
+  process.env.FAMILY_MEAL_DATA_DIR,
+  path.join(__dirname, "..", "data")
+);
+const DATA_FILE = resolveConfiguredPath(
+  process.env.FAMILY_MEAL_DATA_FILE,
+  path.join(DATA_DIR, "family_meals.json")
+);
+const EXPORT_DIR = resolveConfiguredPath(
+  process.env.FAMILY_MEAL_EXPORT_DIR,
+  path.join(DATA_DIR, "exports")
+);
 const CLIENT_DIR = path.join(__dirname, "..", "client");
 
 const DEFAULT_HEADERS = {
