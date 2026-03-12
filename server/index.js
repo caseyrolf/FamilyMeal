@@ -107,7 +107,44 @@ function hashPassword(password) {
 }
 
 function normalizeText(value) {
-  return value ? String(value).trim() : "";
+  return value ? decodeHtmlEntities(String(value)).trim() : "";
+}
+
+const HTML_ENTITY_MAP = {
+  nbsp: " ",
+  amp: "&",
+  quot: '"',
+  apos: "'",
+  lt: "<",
+  gt: ">",
+  ldquo: '"',
+  rdquo: '"',
+  lsquo: "'",
+  rsquo: "'",
+  ndash: "-",
+  mdash: "-",
+  hellip: "...",
+  frac14: "1/4",
+  frac12: "1/2",
+  frac34: "3/4",
+};
+
+function decodeHtmlEntities(value) {
+  if (!value || !value.includes("&")) return value || "";
+  return value.replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (match, entity) => {
+    const normalized = entity.toLowerCase();
+    if (normalized.startsWith("#x")) {
+      const codePoint = Number.parseInt(normalized.slice(2), 16);
+      return Number.isNaN(codePoint) ? match : String.fromCodePoint(codePoint);
+    }
+    if (normalized.startsWith("#")) {
+      const codePoint = Number.parseInt(normalized.slice(1), 10);
+      return Number.isNaN(codePoint) ? match : String.fromCodePoint(codePoint);
+    }
+    return Object.prototype.hasOwnProperty.call(HTML_ENTITY_MAP, normalized)
+      ? HTML_ENTITY_MAP[normalized]
+      : match;
+  });
 }
 
 function normalizeCategories(input) {
@@ -211,7 +248,7 @@ function tokenizeIngredient(line) {
       notes: "",
     };
   }
-  const original = normalizeUnicodeFractions(line.trim());
+  const original = normalizeUnicodeFractions(normalizeText(line));
   const tokens = original.split(/\s+/);
   const maybeQuantity = tokens[0];
   let quantity = parseQuantityText(maybeQuantity);
@@ -274,10 +311,10 @@ function summarizeInstructions(instructions) {
     return instructions
       .map((step) => {
         if (typeof step === "string") {
-          return step.trim();
+          return normalizeText(step);
         }
         if (step && typeof step.text === "string") {
-          return step.text.trim();
+          return normalizeText(step.text);
         }
         return null;
       })
@@ -286,7 +323,7 @@ function summarizeInstructions(instructions) {
   if (typeof instructions === "string") {
     return instructions
       .split(/\n+/)
-      .map((line) => line.trim())
+      .map((line) => normalizeText(line))
       .filter((line) => line.length > 0);
   }
   return [];
@@ -297,8 +334,8 @@ function summarizeIngredients(ingredients) {
   if (Array.isArray(ingredients)) {
     return ingredients
       .map((item) => {
-        if (typeof item === "string") return item.trim();
-        if (item && typeof item.text === "string") return item.text.trim();
+        if (typeof item === "string") return normalizeText(item);
+        if (item && typeof item.text === "string") return normalizeText(item.text);
         return null;
       })
       .filter(Boolean);
@@ -306,7 +343,7 @@ function summarizeIngredients(ingredients) {
   if (typeof ingredients === "string") {
     return ingredients
       .split(/\n+/)
-      .map((line) => line.trim())
+      .map((line) => normalizeText(line))
       .filter((line) => line.length > 0);
   }
   return [];
@@ -355,7 +392,7 @@ function extractJsonLd(html) {
       // Some pages embed multiple JSON objects without wrapping array.
       const wrappedRaw = `[${raw
         .split("\n")
-        .map((line) => line.trim())
+        .map((line) => normalizeText(line))
         .filter((line) => line.length > 0)
         .join("")}]`;
       try {
@@ -372,7 +409,7 @@ function extractJsonLd(html) {
 function extractTitle(html) {
   const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
   if (titleMatch) {
-    return titleMatch[1].trim();
+    return normalizeText(titleMatch[1]);
   }
   return "Untitled Recipe";
 }
@@ -402,14 +439,13 @@ function fallbackParse(html) {
 }
 
 function stripTags(value) {
-  return value
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&#39;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&ldquo;|&rdquo;/gi, '"')
-    .replace(/&lsquo;|&rsquo;/gi, "'")
+  return decodeHtmlEntities(
+    value
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&#39;/gi, "'")
+      .replace(/&#x27;/gi, "'")
+      .replace(/&#x2f;/gi, "/")
+  )
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -494,6 +530,9 @@ const NOISE_LINE_PATTERNS = [
   /^related$/i,
   /^from the editor$/i,
   /^nutrition data/i,
+  /^recipe image$/i,
+  /^nutrition label$/i,
+  /^notes$/i,
 ];
 
 function isNoiseLine(line) {
@@ -503,10 +542,18 @@ function isNoiseLine(line) {
   return NOISE_LINE_PATTERNS.some((pattern) => pattern.test(trimmed));
 }
 
+function normalizeSectionLine(line) {
+  return normalizeText(line)
+    .replace(/^#{1,6}\s*/, "")
+    .replace(/^\*{1,2}\s*/, "")
+    .replace(/^_{1,2}\s*/, "")
+    .trim();
+}
+
 function chooseTitle(lines) {
   for (const line of lines) {
     if (!line) continue;
-    const cleaned = line.replace(/^[•\-\s]+/, "").trim();
+    const cleaned = normalizeSectionLine(line).replace(/^[•\-\s]+/, "").trim();
     if (!cleaned) continue;
     if (
       /^(ingredients|directions|instructions|method|preparation|steps|description|summary|nutrition)\b/i.test(
@@ -555,6 +602,16 @@ function splitNutritionLine(raw) {
   return { label: "", value: line };
 }
 
+function splitCompoundNutritionLine(raw) {
+  const line = normalizeText(raw);
+  if (!line) return [];
+  const segments = line
+    .split(/\s*[|•]\s*/)
+    .map((segment) => normalizeText(segment))
+    .filter(Boolean);
+  return segments.length > 1 ? segments : [line];
+}
+
 function normalizeNutritionEntries(input) {
   if (!input) return [];
   const entries = [];
@@ -573,8 +630,10 @@ function normalizeNutritionEntries(input) {
   const handleItem = (item) => {
     if (!item) return;
     if (typeof item === "string") {
-      const { label, value } = splitNutritionLine(item);
-      pushEntry(label, value);
+      splitCompoundNutritionLine(item).forEach((segment) => {
+        const { label, value } = splitNutritionLine(segment);
+        pushEntry(label, value);
+      });
       return;
     }
     if (Array.isArray(item)) {
@@ -827,6 +886,28 @@ function collectNutritionFromHtml(html) {
   return normalizeNutritionEntries(rows);
 }
 
+function buildRecipeProxyUrl(targetUrl) {
+  return `https://r.jina.ai/http://${targetUrl.host}${targetUrl.pathname}${
+    targetUrl.search || ""
+  }`;
+}
+
+async function fetchRecipeProxyText(url) {
+  const targetUrl = new URL(url);
+  const proxyResponse = await fetch(buildRecipeProxyUrl(targetUrl), {
+    headers: {
+      Accept: "text/plain",
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15",
+    },
+    redirect: "follow",
+  });
+  if (!proxyResponse.ok) {
+    return null;
+  }
+  return proxyResponse.text();
+}
+
 async function fetchRecipeDocument(url) {
   const targetUrl = new URL(url);
   const headers = {
@@ -875,19 +956,9 @@ async function fetchRecipeDocument(url) {
     }
   }
 
-  const proxyUrl = `https://r.jina.ai/http://${targetUrl.host}${targetUrl.pathname}${
-    targetUrl.search || ""
-  }`;
-  const proxyResponse = await fetch(proxyUrl, {
-    headers: {
-      Accept: "text/plain",
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15",
-    },
-    redirect: "follow",
-  });
-  if (proxyResponse.ok) {
-    return { content: await proxyResponse.text(), isProxy: true };
+  const proxyText = await fetchRecipeProxyText(url);
+  if (proxyText) {
+    return { content: proxyText, isProxy: true };
   }
   throw new Error(
     `Unable to fetch recipe (status ${
@@ -896,11 +967,21 @@ async function fetchRecipeDocument(url) {
   );
 }
 
+function findSectionStart(lines, pattern, startIndex = 0) {
+  for (let i = Math.max(0, startIndex); i < lines.length; i += 1) {
+    if (pattern.test(normalizeSectionLine(lines[i]))) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 function parsePlainTextRecipe(text) {
   const emptyResult = {
     name: "Untitled Recipe",
     ingredients: [],
     steps: [],
+    notes: "",
     nutrition: [],
   };
   if (!text) return emptyResult;
@@ -908,21 +989,33 @@ function parsePlainTextRecipe(text) {
   const normalized = text
     .replace(/\r\n/g, "\n")
     .split("\n")
-    .map((line) => line.trim())
+    .map((line) => normalizeText(line))
     .filter((line) => line.length > 0 && !/^(Advertisement|Ad:)/i.test(line));
 
   if (normalized.length === 0) return emptyResult;
 
-  let title = chooseTitle(normalized);
-  const ingredientsStart = normalized.findIndex((line) =>
-    /^ingredients\b/i.test(line)
+  const title = chooseTitle(normalized);
+  const ingredientsStart = findSectionStart(normalized, /^ingredients\b/i);
+  const stepsStart = findSectionStart(
+    normalized,
+    /^(directions|instructions|method|preparation|steps)\b/i,
+    ingredientsStart !== -1 ? ingredientsStart + 1 : 0
   );
-  const stepsStart = normalized.findIndex((line) =>
-    /^(directions|instructions|method|preparation|steps)\b/i.test(line)
+  const sectionSearchStart =
+    stepsStart !== -1
+      ? stepsStart + 1
+      : ingredientsStart !== -1
+        ? ingredientsStart + 1
+        : 0;
+  const notesStart = findSectionStart(
+    normalized,
+    /^(notes?|tips|serving suggestions|cook's note|make ahead|storage)\b/i,
+    sectionSearchStart
   );
-
-  const nutritionStart = normalized.findIndex((line) =>
-    /^(nutrition facts?|nutrition information|nutrition)\b/i.test(line)
+  const nutritionStart = findSectionStart(
+    normalized,
+    /^(nutrition facts?|nutrition information|nutrition)(?!\s+label)\b/i,
+    sectionSearchStart
   );
 
   const ingredientLines = [];
@@ -930,7 +1023,7 @@ function parsePlainTextRecipe(text) {
     for (let i = ingredientsStart + 1; i < normalized.length; i += 1) {
       const line = normalized[i];
       if (
-        /^(directions|instructions|method|preparation|steps)\b/i.test(line)
+        /^(directions|instructions|method|preparation|steps)\b/i.test(normalizeSectionLine(line))
       ) {
         break;
       }
@@ -946,7 +1039,11 @@ function parsePlainTextRecipe(text) {
   if (stepsStart !== -1) {
     for (let i = stepsStart + 1; i < normalized.length; i += 1) {
       const line = normalized[i];
-      if (/^(nutrition|tips|serving suggestions|cook's note)/i.test(line)) {
+      if (
+        /^(nutrition|notes?|tips|serving suggestions|cook's note|make ahead|storage|video)\b/i.test(
+          normalizeSectionLine(line)
+        )
+      ) {
         break;
       }
       const cleaned = normalizeUnicodeFractions(cleanStepLine(line));
@@ -956,13 +1053,31 @@ function parsePlainTextRecipe(text) {
     }
   }
 
+  const noteLines = [];
+  if (notesStart !== -1) {
+    for (let i = notesStart + 1; i < normalized.length; i += 1) {
+      const line = normalized[i];
+      if (
+        /^(ingredients|directions|instructions|method|preparation|steps|nutrition facts?|nutrition information|nutrition|video)\b/i.test(
+          normalizeSectionLine(line)
+        )
+      ) {
+        break;
+      }
+      const cleaned = normalizeUnicodeFractions(cleanStepLine(line));
+      if (cleaned.length > 0) {
+        noteLines.push(cleaned);
+      }
+    }
+  }
+
   const nutritionLines = [];
   if (nutritionStart !== -1) {
     for (let i = nutritionStart + 1; i < normalized.length; i += 1) {
       const line = normalized[i];
       if (
-        /^(ingredients|directions|instructions|method|preparation|steps|tips|serving suggestions|cook's note)/i.test(
-          line
+        /^(ingredients|directions|instructions|method|preparation|steps|notes?|tips|serving suggestions|cook's note|make ahead|storage|video)\b/i.test(
+          normalizeSectionLine(line)
         )
       ) {
         break;
@@ -978,7 +1093,63 @@ function parsePlainTextRecipe(text) {
     name: title || emptyResult.name,
     ingredients: ingredientLines,
     steps: stepLines,
+    notes: noteLines.join("\n").trim(),
     nutrition: normalizeNutritionEntries(nutritionLines),
+  };
+}
+
+function htmlToTextForSectionParsing(html) {
+  if (!html) return "";
+  return decodeHtmlEntities(
+    html
+      .replace(/<script[\s\S]*?<\/script>/gi, "\n")
+      .replace(/<style[\s\S]*?<\/style>/gi, "\n")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(
+        /<\/(p|div|section|article|header|footer|h1|h2|h3|h4|h5|h6|ul|ol|li|tr|table)>/gi,
+        "\n"
+      )
+      .replace(/<li[^>]*>/gi, "• ")
+      .replace(/<[^>]+>/g, " ")
+  )
+    .split("\n")
+    .map((line) => normalizeText(line.replace(/^•\s*/, "• ")))
+    .filter((line) => line.length > 0)
+    .join("\n");
+}
+
+function mergeRecipeParse(primary, fallback) {
+  const primaryIngredients = Array.isArray(primary?.ingredients)
+    ? primary.ingredients
+    : [];
+  const fallbackIngredients = Array.isArray(fallback?.ingredients)
+    ? fallback.ingredients
+    : [];
+  const primarySteps = Array.isArray(primary?.steps) ? primary.steps : [];
+  const fallbackSteps = Array.isArray(fallback?.steps) ? fallback.steps : [];
+  const primaryNutrition = Array.isArray(primary?.nutrition)
+    ? primary.nutrition
+    : [];
+  const fallbackNutrition = Array.isArray(fallback?.nutrition)
+    ? fallback.nutrition
+    : [];
+
+  return {
+    name:
+      normalizeText(primary?.name) ||
+      normalizeText(fallback?.name) ||
+      "Untitled Recipe",
+    description:
+      normalizeText(primary?.description) || normalizeText(fallback?.description),
+    author: normalizeText(primary?.author) || normalizeText(fallback?.author),
+    ingredients: primaryIngredients.length ? primaryIngredients : fallbackIngredients,
+    steps: primarySteps.length ? primarySteps : fallbackSteps,
+    categories: Array.isArray(primary?.categories) ? primary.categories : [],
+    totalTime:
+      normalizeText(primary?.totalTime) || normalizeText(fallback?.totalTime),
+    yield: normalizeText(primary?.yield) || normalizeText(fallback?.yield),
+    notes: normalizeText(primary?.notes) || normalizeText(fallback?.notes),
+    nutrition: primaryNutrition.length ? primaryNutrition : fallbackNutrition,
   };
 }
 
@@ -989,6 +1160,7 @@ async function scrapeRecipe(url) {
     if (
       parsed.ingredients.length ||
       parsed.steps.length ||
+      parsed.notes ||
       (parsed.nutrition && parsed.nutrition.length)
     ) {
       return {
@@ -1000,46 +1172,87 @@ async function scrapeRecipe(url) {
         categories: [],
         totalTime: "",
         yield: "",
+        notes: parsed.notes || "",
         nutrition: parsed.nutrition || [],
       };
     }
   }
+
   const html = content;
+  const htmlFallback = fallbackParse(html);
+  const textFallback = parsePlainTextRecipe(htmlToTextForSectionParsing(html));
+  let proxyFallback = null;
+  if (!isProxy && /\/wprm_print\//i.test(url)) {
+    const proxyText = await fetchRecipeProxyText(url);
+    if (proxyText) {
+      proxyFallback = parsePlainTextRecipe(proxyText);
+    }
+  }
+  const fallback = {
+    ...htmlFallback,
+    notes: proxyFallback?.notes || textFallback.notes || "",
+    steps:
+      proxyFallback?.steps?.length
+        ? proxyFallback.steps
+        : textFallback.steps && textFallback.steps.length
+          ? textFallback.steps
+          : htmlFallback.steps,
+    ingredients:
+      proxyFallback?.ingredients?.length
+        ? proxyFallback.ingredients
+        : textFallback.ingredients && textFallback.ingredients.length
+          ? textFallback.ingredients
+          : htmlFallback.ingredients,
+    nutrition:
+      proxyFallback?.nutrition?.length
+        ? proxyFallback.nutrition
+        : textFallback.nutrition && textFallback.nutrition.length
+          ? textFallback.nutrition
+          : htmlFallback.nutrition || [],
+  };
+
   const jsonLdBlocks = extractJsonLd(html);
   for (const block of jsonLdBlocks) {
     const recipe = pickFirstRecipe(block);
     if (!recipe) continue;
-    const name =
-      normalizeText(recipe.name) ||
-      normalizeText(recipe.headline) ||
-      extractTitle(html);
-    const ingredients = summarizeIngredients(recipe.recipeIngredient);
-    const steps = summarizeInstructions(recipe.recipeInstructions);
-    const categories = normalizeCategories(
-      recipe.recipeCategory || recipe.keywords
-    );
-    if (name || ingredients.length || steps.length) {
-      return {
-        name: name || "Untitled Recipe",
+    const merged = mergeRecipeParse(
+      {
+        name:
+          normalizeText(recipe.name) ||
+          normalizeText(recipe.headline) ||
+          extractTitle(html),
         description: normalizeText(recipe.description),
         author: normalizeText(
           typeof recipe.author === "string"
             ? recipe.author
             : recipe.author?.name
         ),
-        ingredients,
-        steps,
-        categories,
+        ingredients: summarizeIngredients(recipe.recipeIngredient),
+        steps: summarizeInstructions(recipe.recipeInstructions),
+        categories: normalizeCategories(
+          recipe.recipeCategory || recipe.keywords
+        ),
         totalTime: normalizeText(recipe.totalTime),
         yield: normalizeText(recipe.recipeYield),
         nutrition: normalizeNutritionEntries(recipe.nutrition),
-      };
+      },
+      fallback
+    );
+    if (
+      merged.name ||
+      merged.ingredients.length ||
+      merged.steps.length ||
+      merged.notes ||
+      merged.nutrition.length
+    ) {
+      return merged;
     }
   }
-  const fallback = fallbackParse(html);
+
   return {
     ...fallback,
     nutrition: fallback.nutrition || [],
+    notes: fallback.notes || "",
   };
 }
 

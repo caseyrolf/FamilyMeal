@@ -520,6 +520,311 @@
           "nutrition": [],
           "createdAt": "2026-03-11T21:46:56.074Z",
           "updatedAt": "2026-03-11T21:46:56.074Z"
+        },
+        {
+          "id": "fb38ca48-5b04-42b2-98ef-a623107ab9db",
+          "name": "Chicken Parmesan - Tastes Better From Scratch",
+          "url": "https://tastesbetterfromscratch.com/wprm_print/chicken-parmesan",
+          "categories": [
+            "chicken",
+            "italian"
+          ],
+          "ingredients": [
+            {
+              "id": "9dc5b14d-037d-4149-b708-d41168cc191f",
+              "original": "3   boneless skinless chicken breasts   , cut in half horizontally to make 6 breast halves*",
+              "quantity": 3,
+              "unit": null,
+              "ingredient": "boneless skinless chicken breasts , cut in half horizontally to make 6 breast halves*",
+              "notes": ""
+            },
+            {
+              "id": "46f10281-953d-4667-943a-6583b81c3234",
+              "original": "1/2   cup    freshly grated parmesan cheese    , divided",
+              "quantity": 0.5,
+              "unit": "cup",
+              "ingredient": "freshly grated parmesan cheese , divided",
+              "notes": ""
+            },
+            {
+              "id": "415e789c-7edb-4480-b35c-6a8b11c896e4",
+              "original": "2   eggs",
+              "quantity": 2,
+              "unit": null,
+              "ingredient": "eggs",
+              "notes": ""
+            },
+            {
+              "id": "bd536e1f-8c38-41f2-8d1a-79fbb9f55742",
+              "original": "1   cup    panko bread crumbs",
+              "quantity": 1,
+              "unit": "cup",
+              "ingredient": "panko bread crumbs",
+              "notes": ""
+            },
+            {
+              "id": "427beb19-9294-4195-8ff2-59b38c2e9244",
+              "original": "1   cup    Italian style bread crumbs    , or panko",
+              "quantity": 1,
+              "unit": "cup",
+              "ingredient": "Italian style bread crumbs , or panko",
+              "notes": ""
+            },
+            {
+              "id": "1d85bc91-33f5-4057-bbe8-12f3e0208ed1",
+              "original": "1   teaspoon    garlic powder",
+              "quantity": 1,
+              "unit": "tsp",
+              "ingredient": "garlic powder",
+              "notes": ""
+            },
+            {
+              "id": "91e4ba39-26f8-439e-a5eb-d9315778fc12",
+              "original": "3   Tablespoons    oil",
+              "quantity": 3,
+              "unit": "tbsp",
+              "ingredient": "oil",
+              "notes": ""
+            },
+            {
+              "id": "1ea253c5-c234-4116-8902-c188ba65e5aa",
+              "original": "24   ounces    marinara sauce    , or  HOMEMADE",
+              "quantity": 24,
+              "unit": "oz",
+              "ingredient": "marinara sauce , or HOMEMADE",
+              "notes": ""
+            },
+            {
+              "id": "9de9c001-2e28-475c-99b3-80baf5e3778e",
+              "original": "1   cup   shredded mozzarella cheese",
+              "quantity": 1,
+              "unit": "cup",
+              "ingredient": "shredded mozzarella cheese",
+              "notes": ""
+            },
+            {
+              "id": "dffd3f1e-058f-46b7-9e34-c0a58c3c1082",
+              "original": "fresh basil leaves    , for serving",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "fresh basil leaves , for serving",
+              "notes": ""
+            },
+            {
+              "id": "93194726-e030-4fd1-a811-9bfbf8b4770d",
+              "original": "US Customary  -  Metric",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "US Customary - Metric",
+              "notes": ""
+            }
+          ],
+          "steps": [
+            "Preheat oven to 450 degrees F.",
+            "Butterfly chicken breasts: Place one hand on top of the breast and carefully run a knife through the center of the meat to create two, even, thin breast halves.",
+            "Pat chicken dry and season well on both sides with salt and pepper.",
+            "Add eggs to a shallow bowl and beat well. Add breadcrumbs, parmesan and garlic powder to another shallow bowl and stir to combine.",
+            "Dip each piece of chicken into the egg mixture, and then press into breadcrumbs, coating on both sides.",
+            "Add oil to a large skillet over medium-high heat. Once hot, add breaded chicken and cook for about 2 minutes on each side, until golden, but not cooked through.",
+            "Spoon a thin layer of  marinara sauce  into a 9x13’’ baking pan, to cover the bottom of the pan. Place breaded chicken on top.",
+            "Add a spoonful of marinara sauce over the chicken, followed by a sprinkle of mozzarella and parmesan cheese.",
+            "Bake for 10-15 minutes or until cheese is melted and bubbly and chicken is cooked through (165 degrees F).",
+            "Garnish with fresh chopped basil. Serve over hot cooked spaghetti noodles, with extra sauce, if desired."
+          ],
+          "notes": "Chicken Breasts:  If they are not thick enough to cut into halves you could place them between two pieces of plastic wrap and use a meat mallet or rolling pin to gently pound them evenly to 1/2 inch thick.\nTo Make Ahead : Make the marinara sauce several days in advance. Butterfly and bread the chicken, and store covered in the fridge a few hours ahead of time.\nTo Freeze:  Follow the recipe directions up to step 5 (dredging) and place the breaded chicken in a greased, freezer safe foil  pan.  Add all chicken pieces and cover tightly.  Freeze for up to 3 months. Thaw completely, then brown chicken in skillet and bake, as directed.\nVariations:\nSkip the Breading:  Skip the breading all together or choose whole wheat breadcrumbs.\nVeggies:  Serve with  roasted vegetables .\nCut the Cheese:  Cheese adds a lot of saturated fat. Choose to add less cheese or leave it off all together and let the marinara sauce do the talking!\nServe over zoodles , instead of pasta.\nChicken Parmesan Sandwich:  Serve the chicken parmesan inside toasted sandwich bread or rolls.",
+          "source": null,
+          "nutrition": [
+            {
+              "id": "011963d7-f72a-46cd-ab94-2b2bb200d216",
+              "label": "Calories",
+              "value": "378  kcal"
+            },
+            {
+              "id": "05d227b4-69fc-4cd1-8f60-e0a0d3211c61",
+              "label": "Carbohydrates",
+              "value": "28  g"
+            },
+            {
+              "id": "32d32f66-4117-40a4-bc98-0cb7dc494d2f",
+              "label": "Protein",
+              "value": "26  g"
+            },
+            {
+              "id": "cf9593b1-d5e9-4d58-94c5-0a9a70e7c97d",
+              "label": "Fat",
+              "value": "18  g"
+            },
+            {
+              "id": "c1bfc91c-c981-4425-9920-f574ffeb6769",
+              "label": "Saturated Fat",
+              "value": "5  g"
+            },
+            {
+              "id": "7a503340-2e5c-4faa-8154-d9ab8670de44",
+              "label": "Polyunsaturated Fat",
+              "value": "3  g"
+            },
+            {
+              "id": "5840efc7-e5a8-4002-9503-212ae7b8369c",
+              "label": "Monounsaturated Fat",
+              "value": "7  g"
+            },
+            {
+              "id": "f04a8492-986f-4003-8863-01e7594f0f39",
+              "label": "Trans Fat",
+              "value": "0.04  g"
+            },
+            {
+              "id": "60487b8e-b197-488d-8f92-e8fa8bb599b1",
+              "label": "Cholesterol",
+              "value": "113  mg"
+            },
+            {
+              "id": "fdde4721-3b20-4f72-9899-e8223d64260b",
+              "label": "Sodium",
+              "value": "1092  mg"
+            },
+            {
+              "id": "34956c3c-153c-4b6f-839f-18e79aeb5cd9",
+              "label": "Potassium",
+              "value": "656  mg"
+            },
+            {
+              "id": "9c31ec52-7285-4f4e-aa37-53f29e0286f7",
+              "label": "Fiber",
+              "value": "3  g"
+            },
+            {
+              "id": "f05e6153-76d7-4858-ba7d-b477bb4d4d48",
+              "label": "Sugar",
+              "value": "6  g"
+            },
+            {
+              "id": "b53805ab-12b9-4a2a-b6cd-175bd7cf72d3",
+              "label": "Vitamin A",
+              "value": "785  IU"
+            },
+            {
+              "id": "d97f6135-fb9c-4903-9c02-77fc2eaba7eb",
+              "label": "Vitamin C",
+              "value": "9  mg"
+            },
+            {
+              "id": "171702fa-75b8-4a32-aa7c-2e1a0fb69a92",
+              "label": "Calcium",
+              "value": "246  mg"
+            },
+            {
+              "id": "5f668034-bcee-44bb-b659-b175b46f51ed",
+              "label": "Iron",
+              "value": "3  mg"
+            },
+            {
+              "id": "3e513b45-f9d1-4663-a341-083a5615a48a",
+              "label": "https",
+              "value": "//tastesbetterfromscratch.com/simple-chicken-parmesan/"
+            }
+          ],
+          "createdAt": "2026-03-12T20:50:00.811Z",
+          "updatedAt": "2026-03-12T20:50:00.811Z"
+        },
+        {
+          "id": "7aefe9db-c27e-4288-b484-640c0fa22dd2",
+          "name": "Classic Chocolate Chip Cookies",
+          "url": "https://www.ghirardelli.com/recipe/recipe/printView/id/82/#",
+          "categories": [
+            "dessert"
+          ],
+          "ingredients": [
+            {
+              "id": "33018412-9e83-412b-ba09-bb17d8f6150f",
+              "original": "1 cup Butter or margarine, softened",
+              "quantity": 1,
+              "unit": "cup",
+              "ingredient": "Butter or margarine, softened",
+              "notes": ""
+            },
+            {
+              "id": "fd7fe848-2abe-49b7-99c3-f79f6508181b",
+              "original": "3/4 cup Sugar",
+              "quantity": 0.75,
+              "unit": "cup",
+              "ingredient": "Sugar",
+              "notes": ""
+            },
+            {
+              "id": "5a005378-5cb9-4838-9c45-8d31d8097442",
+              "original": "3/4 cup Brown sugar, packed",
+              "quantity": 0.75,
+              "unit": "cup",
+              "ingredient": "Brown sugar, packed",
+              "notes": ""
+            },
+            {
+              "id": "97e47f56-64db-4767-be02-3c33a5753b5c",
+              "original": "2 Eggs, large",
+              "quantity": 2,
+              "unit": null,
+              "ingredient": "Eggs, large",
+              "notes": ""
+            },
+            {
+              "id": "e5178cf7-cf13-497b-9d3a-65b3c7091086",
+              "original": "2 teaspoons Vanilla",
+              "quantity": 2,
+              "unit": "tsp",
+              "ingredient": "Vanilla",
+              "notes": ""
+            },
+            {
+              "id": "2ba936f7-4135-4612-9827-bd7f26b9f8ac",
+              "original": "2 1/4 cups Flour, unsifted",
+              "quantity": 2.25,
+              "unit": "cup",
+              "ingredient": "Flour, unsifted",
+              "notes": ""
+            },
+            {
+              "id": "b96e4752-8093-4be7-878b-5c15bb832a22",
+              "original": "1 teaspoon Baking soda",
+              "quantity": 1,
+              "unit": "tsp",
+              "ingredient": "Baking soda",
+              "notes": ""
+            },
+            {
+              "id": "bfd97c66-66eb-4166-a35d-f19a61f82ba4",
+              "original": "1/2 teaspoon Salt",
+              "quantity": 0.5,
+              "unit": "tsp",
+              "ingredient": "Salt",
+              "notes": ""
+            },
+            {
+              "id": "dfbdbfd0-434f-40ac-88ad-3efaf366f169",
+              "original": "2 cups Ghirardelli Bittersweet 60% Cacao Baking Chips",
+              "quantity": 2,
+              "unit": "cup",
+              "ingredient": "Ghirardelli Bittersweet 60% Cacao Baking Chips",
+              "notes": ""
+            },
+            {
+              "id": "8fc3536a-cd24-44ed-854a-3519fc204743",
+              "original": "Note: The 2 cups of Ghirardelli Bittersweet 60% Cacao Baking Chips can be substituted with any variety of chip flavor (i.e.- Ghirardelli Milk Chocolate Chips, Semi-Sweet Chocolate Chips, etc.)",
+              "quantity": null,
+              "unit": null,
+              "ingredient": "Note: The 2 cups of Ghirardelli Bittersweet 60% Cacao Baking Chips can be substituted with any variety of chip flavor",
+              "notes": "i.e.- Ghirardelli Milk Chocolate Chips, Semi-Sweet Chocolate Chips, etc."
+            }
+          ],
+          "steps": [
+            "Heat oven to 375ºF.Stir flour with baking soda and salt; set aside.In large mixing bowl, beat butter with sugar, and brown sugar at medium speed until creamy and lightened in color.Add eggs and vanilla, one at a time. Mix on low speed until incorporated.Gradually blend dry mixture into creamed mixture. Stir in nuts and chocolate chips.Drop by tablespoon onto ungreased cookie sheets.Bake for 9 to 11 minutes or until chocolate chip cookies are golden brown."
+          ],
+          "notes": "",
+          "source": null,
+          "nutrition": [],
+          "createdAt": "2026-03-12T20:51:57.393Z",
+          "updatedAt": "2026-03-12T20:51:57.393Z"
         }
       ],
       "metadata": {}

@@ -881,7 +881,7 @@ function RecipeCaptureModal({ onClose, onSave }) {
         ingredients: parsed.ingredients || [],
         steps: parsed.steps || [],
         nutrition: parsed.nutrition || [],
-        notes: "",
+        notes: parsed.notes || "",
         source: parsed.author || "",
       });
       setStep("edit");
@@ -1383,7 +1383,7 @@ function RecipeDetailModal({ recipe, onClose, onEditFull, onUpdateSections }) {
             </p>
           )}
           {recipe.notes && (
-            <p>
+            <p className="recipe-notes">
               <strong>Notes:</strong> {recipe.notes}
             </p>
           )}

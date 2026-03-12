@@ -524,3 +524,7 @@ button {
     flex-direction: column;
   }
 }
+
+.recipe-notes {
+  white-space: pre-line;
+}
