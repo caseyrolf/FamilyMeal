@@ -886,6 +886,15 @@ function collectNutritionFromHtml(html) {
   return normalizeNutritionEntries(rows);
 }
 
+async function attemptFetch(url, options = {}) {
+  try {
+    const response = await fetch(url, options);
+    return { response, error: null };
+  } catch (error) {
+    return { response: null, error };
+  }
+}
+
 function buildRecipeProxyUrl(targetUrl) {
   return `https://r.jina.ai/http://${targetUrl.host}${targetUrl.pathname}${
     targetUrl.search || ""
@@ -894,15 +903,18 @@ function buildRecipeProxyUrl(targetUrl) {
 
 async function fetchRecipeProxyText(url) {
   const targetUrl = new URL(url);
-  const proxyResponse = await fetch(buildRecipeProxyUrl(targetUrl), {
-    headers: {
-      Accept: "text/plain",
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15",
-    },
-    redirect: "follow",
-  });
-  if (!proxyResponse.ok) {
+  const { response: proxyResponse } = await attemptFetch(
+    buildRecipeProxyUrl(targetUrl),
+    {
+      headers: {
+        Accept: "text/plain",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15",
+      },
+      redirect: "follow",
+    }
+  );
+  if (!proxyResponse || !proxyResponse.ok) {
     return null;
   }
   return proxyResponse.text();
@@ -914,19 +926,9 @@ async function fetchRecipeDocument(url) {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
     Accept:
-      "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Upgrade-Insecure-Requests": "1",
-    "Accept-Encoding": "gzip, deflate, br",
-    Connection: "keep-alive",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "sec-ch-ua":
-      '"Chromium";v="123", "Not:A-Brand";v="8", "Google Chrome";v="123"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"Windows"',
   };
   headers.Referer = "https://www.google.com/";
 
@@ -941,11 +943,19 @@ async function fetchRecipeDocument(url) {
   }
 
   let lastStatus = null;
+  let lastError = null;
   for (const candidate of candidates) {
-    const response = await fetch(candidate, {
+    const { response, error } = await attemptFetch(candidate, {
       headers,
       redirect: "follow",
     });
+    if (error) {
+      lastError = error;
+      continue;
+    }
+    if (!response) {
+      continue;
+    }
     lastStatus = response.status;
     if (response.ok) {
       const html = await response.text();
@@ -960,11 +970,10 @@ async function fetchRecipeDocument(url) {
   if (proxyText) {
     return { content: proxyText, isProxy: true };
   }
-  throw new Error(
-    `Unable to fetch recipe (status ${
-      lastStatus ?? proxyResponse.status
-    })`
-  );
+  const details = lastStatus
+    ? `status ${lastStatus}`
+    : lastError?.message || "fetch failed";
+  throw new Error(`Unable to fetch recipe (${details})`);
 }
 
 function findSectionStart(lines, pattern, startIndex = 0) {
